@@ -5,7 +5,7 @@
 tool descriptions in the public binaries (from release v0.1.384, 2026-10-07); see [Earlier public traces](#earlier-public-traces)
 **Status of disclosure:** written description with pseudocode (this document). The reference implementation is distributed
 in binary form; its source code is not public
-**Author:** Artem Prokhorov (Seventh Wall Lab)
+**Author:** Artem Prokhorov
 
 Documents 01 to 10 record earlier publications. This one is the publication itself, and its date is the date this file
 was first published in this repository. All times are UTC; see [README.md](README.md#how-to-verify-dates).

@@ -1,4 +1,4 @@
-# Prior public disclosures: Artem Prokhorov / Seventh Wall Lab
+# Prior public disclosures by Artem Prokhorov
 
 This repository collects short records of memory-system mechanisms that **Artem Prokhorov** (Artëm Prokhorov) had
 already published, as open-source code and design notes, in his personal GitHub repositories between January and
