@@ -1,6 +1,6 @@
 # Evaluation methods for a personal memory graph: LoCoMo retrieval adapter, Personal Continuity Benchmark, regression set
 
-**First public disclosure:** 2026-02-11 — reference-query precision baseline (P@5 / Top-1), hippograph [`19c08ce`](https://github.com/artemMprokhorov/hippograph/commit/19c08ce); LoCoMo adapter 2026-02-12 ([`3dbd353`](https://github.com/artemMprokhorov/hippograph/commit/3dbd353)); Personal Continuity Benchmark 2026-03-16 (hippograph-pro [`cf5afff`](https://github.com/artemMprokhorov/hippograph-pro/commit/cf5afff))
+**First public disclosure:** 2026-02-11, reference-query precision baseline (P@5 / Top-1), hippograph [`19c08ce`](https://github.com/artemMprokhorov/hippograph/commit/19c08ce); LoCoMo adapter 2026-02-12 ([`3dbd353`](https://github.com/artemMprokhorov/hippograph/commit/3dbd353)); Personal Continuity Benchmark 2026-03-16 (hippograph-pro [`cf5afff`](https://github.com/artemMprokhorov/hippograph-pro/commit/cf5afff))
 **Status of disclosure:** working code (MIT) and written methodology (`BENCHMARK.md`, `benchmark/README.md`)
 
 All times are UTC; see [README.md](README.md#how-to-verify-dates). This document describes *what was measured and how*;
@@ -9,7 +9,7 @@ result numbers are the ones published in the old repos at the time and are given
 ## What it is
 
 Three ways of measuring a long-term memory for an AI agent without needing an LLM in the retrieval loop:
-(1) a public conversational dataset (LoCoMo) adapted into a retrieval-only test — load the dialogues as notes, ask the
+(1) a public conversational dataset (LoCoMo) adapted into a retrieval-only test: load the dialogues as notes, ask the
 dataset questions, check whether the evidence turns are in the top-k; (2) a *Personal Continuity Benchmark* (PCB) that
 asks questions about the agent's own long-running relationship and project history and checks the real memory store;
 (3) a small regression set of known queries with expected notes, run after every deploy. Around them: baselines on the
@@ -31,22 +31,22 @@ same data, an end-to-end variant with answer generation, a fixed seed and an iso
   session as one note (category `locomo-conv<N>`), keeping a map from note to the dialogue ids (`dia_id`) it contains;
 - for each question: search, take top-k, *hit* if any returned note contains a ground-truth evidence `dia_id`;
   metrics Recall@k (k = 5) and MRR, broken down by single-hop / multi-hop / temporal / open-domain; adversarial
-  questions (no evidence) are skipped — 1,540 questions; "Retrieval-only evaluation approach (no LLM API calls needed)";
+  questions (no evidence) are skipped: 1,540 questions; "Retrieval-only evaluation approach (no LLM API calls needed)";
 - [`13d95ef`](https://github.com/artemMprokhorov/hippograph/commit/13d95ef): a separate benchmark container with its own empty database and REST endpoints, so the
   personal memory is never mixed with benchmark data;
 - granularity as a parameter: session (≈272 notes), turn (≈5,882 notes, [`bb1ca1a`](https://github.com/artemMprokhorov/hippograph/commit/bb1ca1a)), hybrid 3-turn chunks
   ([`d42bd87`](https://github.com/artemMprokhorov/hippograph/commit/d42bd87)), optionally with cross-encoder reranking;
 - [`581797a`](https://github.com/artemMprokhorov/hippograph/commit/581797a) [`BENCHMARK.md`](https://github.com/artemMprokhorov/hippograph/blob/581797a/BENCHMARK.md): results per granularity with an explicit
-  comparability note — a retrieval metric, "not comparable to end-to-end F1" reported by other systems. First run:
+  comparability note, a retrieval metric, "not comparable to end-to-end F1" reported by other systems. First run:
   session level, [`9749d91`](https://github.com/artemMprokhorov/hippograph/commit/9749d91); the figures are in BENCHMARK.md at that commit.
 
 **3. Baselines, end-to-end QA, reproducibility** (hippograph-pro)
-- [`7a27e29`](https://github.com/artemMprokhorov/hippograph-pro/commit/7a27e29): baseline servers with the same REST API — pure BM25 and pure cosine (same embeddings,
-  no graph) — and a runner that evaluates all systems on the same dataset, queries and metric (Recall@5, MRR per
+- [`7a27e29`](https://github.com/artemMprokhorov/hippograph-pro/commit/7a27e29): baseline servers with the same REST API: pure BM25 and pure cosine (same embeddings,
+  no graph), and a runner that evaluates all systems on the same dataset, queries and metric (Recall@5, MRR per
   category, latency P50/P95), granularity `turn | session | hybrid`;
-- [`40fd2ea`](https://github.com/artemMprokhorov/hippograph-pro/commit/40fd2ea), [`80a3712`](https://github.com/artemMprokhorov/hippograph-pro/commit/80a3712): QA pairs generated from the own notes — by a small LLM, or rule-based without any
+- [`40fd2ea`](https://github.com/artemMprokhorov/hippograph-pro/commit/40fd2ea), [`80a3712`](https://github.com/artemMprokhorov/hippograph-pro/commit/80a3712): QA pairs generated from the own notes, by a small LLM, or rule-based without any
   LLM (entity-based, keyword and first-sentence questions, English / Russian);
-- [`dd25b64`](https://github.com/artemMprokhorov/hippograph-pro/commit/dd25b64) ([`benchmark/e2e_eval.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/dd25b64/benchmark/e2e_eval.py)): end-to-end variant — question → top-5 retrieval → a small
+- [`dd25b64`](https://github.com/artemMprokhorov/hippograph-pro/commit/dd25b64) ([`benchmark/e2e_eval.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/dd25b64/benchmark/e2e_eval.py)): end-to-end variant: question → top-5 retrieval → a small
   LLM answers from that context only ("If the context doesn't contain the answer, say Unknown") → token F1, ROUGE-1
   and exact match against the reference; retrieval itself stays LLM-free;
 - [`dbad43e`](https://github.com/artemMprokhorov/hippograph-pro/commit/dbad43e) ([`benchmark/README.md`](https://github.com/artemMprokhorov/hippograph-pro/blob/dbad43e/benchmark/README.md)): fixed seeds (`random.seed(42)`, `numpy.seed(42)`),
@@ -59,12 +59,12 @@ same data, an end-to-end variant with answer generation, a fixed seed and an iso
   own history with the user (identity, project history, technical decisions, architecture, security, dated sessions,
   relational context), each with ground-truth note ids; metric Recall@5 (hit if any expected note is in the top 5),
   per category; run against the production memory, not a synthetic set;
-- v2 [`16ea48e`](https://github.com/artemMprokhorov/hippograph-pro/commit/16ea48e): ground truth by content instead of ids — a hit if a top-5 result contains any of a
-  list of keywords (OR logic, bilingual) — so the test survives re-imports and id changes; 27 questions, 7 categories;
+- v2 [`16ea48e`](https://github.com/artemMprokhorov/hippograph-pro/commit/16ea48e): ground truth by content instead of ids: a hit if a top-5 result contains any of a
+  list of keywords (OR logic, bilingual): so the test survives re-imports and id changes; 27 questions, 7 categories;
 - v3 [`4480c7b`](https://github.com/artemMprokhorov/hippograph-pro/commit/4480c7b) (26 q.) and v4 [`c36d9c4`](https://github.com/artemMprokhorov/hippograph-pro/commit/c36d9c4) (32 q.): questions refreshed from recent sessions;
   methodology written up in `BENCHMARK.md` (setup table: questions, metric, data, config);
 - atomic facts [`b3d177c`](https://github.com/artemMprokhorov/hippograph-pro/commit/b3d177c) (2026-03-24): 15 numeric / factual questions with known parent notes;
-- [`8b8f995`](https://github.com/artemMprokhorov/hippograph-pro/commit/8b8f995) (pushed as [`e772acf`](https://github.com/artemMprokhorov/hippograph-pro/commit/e772acf), 2026-03-27): A/B protocol — atomic-fact set + PCB set run
+- [`8b8f995`](https://github.com/artemMprokhorov/hippograph-pro/commit/8b8f995) (pushed as [`e772acf`](https://github.com/artemMprokhorov/hippograph-pro/commit/e772acf), 2026-03-27): A/B protocol: atomic-fact set + PCB set run
   in an isolated container on a copy of the production database, configurations compared row by row, with the average
   of both sets as the deciding number;
 - v5 [`17a3c18`](https://github.com/artemMprokhorov/hippograph-pro/commit/17a3c18) (pushed as [`b2f2f10`](https://github.com/artemMprokhorov/hippograph-pro/commit/b2f2f10), 2026-03-28),
@@ -92,7 +92,7 @@ same data, an end-to-end variant with answer generation, a fixed seed and an iso
 
 ## Variants disclosed
 
-- Ground truth by **note id** (PCB v1, regression set) or by **content keywords** (PCB v2–v5).
+- Ground truth by **note id** (PCB v1, regression set) or by **content keywords** (PCB v2-v5).
 - LoCoMo **granularity**: session, turn, hybrid 3-turn chunks.
 - **Retrieval-only** (Recall@k, MRR) vs **end-to-end** (generated answer, F1 / ROUGE-1 / EM).
 - **Baselines** on identical data: BM25-only, cosine-only, full graph system.
@@ -105,7 +105,7 @@ personal collections (Dumais et al., SIGIR 2003; Elsweiler & Ruthven, SIGIR 2007
 2402.17753, 2024) and LongMemEval (Wu et al., arXiv 2410.10813, 2024) retrieval evaluation; template-based question
 generation (Heilman & Smith, 2010).
 Our contribution (first disclosed 2026-03-16, hippograph-pro cf5afff; content-matched version 2026-03-20, 16ea48e): a
-personal continuity benchmark — hand-written questions about the agent's own production memory, grouped into
+personal continuity benchmark, hand-written questions about the agent's own production memory, grouped into
 identity, history, decisions, architecture, security, temporal and emotional categories, scored as Recall@5 against
 expected notes matched by content keywords rather than note IDs, so the test survives re-ingestion. The LLM-free,
 retrieval-only LoCoMo protocol (2026-02-12): no distinct contribution claimed.

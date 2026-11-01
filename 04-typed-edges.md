@@ -1,8 +1,8 @@
 # Typed edges in a personal memory graph
 
 **First public disclosure:**
-- 2026-01-23: `semantic` and `entity` edge types, described — hippograph [`813d0a1`](https://github.com/artemMprokhorov/hippograph/commit/813d0a1f7fe95c153df83080f4d8140203881861).
-- 2026-01-26: the same edge types as working code — hippograph [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e51a1edc25759da249cfdd37c1d9ddb9a49).
+- 2026-01-23: `semantic` and `entity` edge types, described: hippograph [`813d0a1`](https://github.com/artemMprokhorov/hippograph/commit/813d0a1f7fe95c153df83080f4d8140203881861).
+- 2026-01-26: the same edge types as working code: hippograph [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e51a1edc25759da249cfdd37c1d9ddb9a49).
 - The other types followed between 2026-01-28 and 2026-03-31; see the timeline below.
 
 **Status of disclosure:** working code for every type listed here (MIT License).
@@ -87,7 +87,7 @@ arXiv 2601.03236, 2026-01-06; mcp-memory-service relationship ontology, 2026-01-
 temporal, semantic, affective, contradicts, derived_from and part_of links); emotion nodes in associative memory
 (Bower 1981); lexical hierarchies (WordNet); topic nodes over clusters (GraphRAG, 2024).
 Our contribution (first disclosed 2026-03-16 and 2026-03-22, hippograph-pro 74078e0, 4dc70d9, 243f149): rules that
-build three edge types without any generative model, in an offline pass — emotional-resonance edges between notes
+build three edge types without any generative model, in an offline pass: emotional-resonance edges between notes
 sharing at least two emotional-tone tags, weighted by Jaccard and capped per note; paired generalizes/instantiates
 edges between notes of designated concrete-experience and abstract-rule categories above a cosine threshold; and
 supersedes edges from a later note to an earlier one when they are highly similar and share at least one entity.

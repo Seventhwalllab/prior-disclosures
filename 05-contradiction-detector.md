@@ -1,6 +1,6 @@
 # Zero-LLM contradiction detection between memory notes (semantic similarity + negation/update cues)
 
-**First public disclosure:** 2026-03-03 — hippograph-pro [`c547d78`](https://github.com/artemMprokhorov/hippograph-pro/commit/c547d783fb6d1502053e6e45a9d9fe0e1bee3b86), originally pushed 2026-03-03T23:04:43Z as [`2d691dc`](https://github.com/artemMprokhorov/hippograph-pro/commit/2d691dced94b1ef647c3e238062f76e6cdc975bc).
+**First public disclosure:** 2026-03-03, hippograph-pro [`c547d78`](https://github.com/artemMprokhorov/hippograph-pro/commit/c547d783fb6d1502053e6e45a9d9fe0e1bee3b86), originally pushed 2026-03-03T23:04:43Z as [`2d691dc`](https://github.com/artemMprokhorov/hippograph-pro/commit/2d691dced94b1ef647c3e238062f76e6cdc975bc).
 **Status of disclosure:** working code (MIT License). An earlier one-line idea appeared on 2026-02-20.
 
 All times are UTC. "Pushed" times are from GitHub's server-side push log (`/activity`, saved 2026-10-31).

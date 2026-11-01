@@ -1,6 +1,6 @@
 # Blended retrieval scoring over a memory graph: semantic + spreading + BM25 + temporal, RRF, hub penalty, lateral inhibition
 
-**First public disclosure:** 2026-02-11 — hippograph [`d86ccd6`](https://github.com/artemMprokhorov/hippograph/commit/d86ccd61e8ecba756291dc69105480785f60fa9d) (semantic + spreading blend). The full four-signal blend was public on 2026-02-18 ([`e76ef82`](https://github.com/artemMprokhorov/hippograph/commit/e76ef82d3f13486173404f2b72724d2e04cf8aaf)).
+**First public disclosure:** 2026-02-11, hippograph [`d86ccd6`](https://github.com/artemMprokhorov/hippograph/commit/d86ccd61e8ecba756291dc69105480785f60fa9d) (semantic + spreading blend). The full four-signal blend was public on 2026-02-18 ([`e76ef82`](https://github.com/artemMprokhorov/hippograph/commit/e76ef82d3f13486173404f2b72724d2e04cf8aaf)).
 **Status of disclosure:** working code (MIT License). RRF was first described on 2026-02-18 and published as code on 2026-02-20.
 
 All times are UTC. Git author dates are in UTC−3. "Pushed" times are from GitHub's server-side push log (`/activity`, saved 2026-10-31).
@@ -91,7 +91,7 @@ al. 2009); semantic + BM25 + graph + temporal retrieval fused by RRF in agent me
 2024); lateral inhibition in agent-memory retrieval (SYNAPSE, arXiv 2601.02744, 2026-01-06); result diversification
 (MMR, 1998).
 Our contribution (first disclosed 2026-03-16, hippograph-pro 04eb35e): lateral inhibition scoped to graph
-communities — after score fusion, candidates compete only within the community detected on the memory graph; the
+communities, after score fusion, candidates compete only within the community detected on the memory graph; the
 top-scoring note of each community keeps its score and every other member is multiplied by (1 − s). The weighted
 blend, the RRF option, the entity-count hub penalty and the temporal-overlap term (2026-02-11 … 02-20) are disclosed
 as implementation, without a novelty claim.

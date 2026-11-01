@@ -1,6 +1,6 @@
 # Spreading activation over a personal memory graph, seeded by semantic / ANN retrieval
 
-**First public disclosure:** 2026-01-23 (description) — hippograph [`813d0a1`](https://github.com/artemMprokhorov/hippograph/commit/813d0a1f7fe95c153df83080f4d8140203881861); 2026-01-26 (working code) — hippograph [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e51a1edc25759da249cfdd37c1d9ddb9a49)
+**First public disclosure:** 2026-01-23 (description), hippograph [`813d0a1`](https://github.com/artemMprokhorov/hippograph/commit/813d0a1f7fe95c153df83080f4d8140203881861); 2026-01-26 (working code), hippograph [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e51a1edc25759da249cfdd37c1d9ddb9a49)
 **Status of disclosure:** working code (MIT License)
 
 All times are UTC. Git author dates in these repositories are in UTC−3, so `git log` may show the previous calendar day.
@@ -16,7 +16,7 @@ Second, that activation spreads along the graph edges for a fixed number of iter
 
 **Description, 2026-01-23** ([`docs/GRAPH_FEATURES.md` @ 813d0a1](https://github.com/artemMprokhorov/hippograph/blob/813d0a1f7fe95c153df83080f4d8140203881861/docs/GRAPH_FEATURES.md)): the query is embedded and similar notes are found by vector similarity. Activation then spreads along graph edges and boosts the notes connected to the similar notes. The document states the algorithm in four steps: "Initial activation", "Spread to neighbors", "Decay", "Threshold".
 
-**Working code, 2026-01-26** ([`src/graph_engine.py` @ a96a1e5](https://github.com/artemMprokhorov/hippograph/blob/a96a1e51a1edc25759da249cfdd37c1d9ddb9a49/src/graph_engine.py), `search_with_activation`, lines 110–194):
+**Working code, 2026-01-26** ([`src/graph_engine.py` @ a96a1e5](https://github.com/artemMprokhorov/hippograph/blob/a96a1e51a1edc25759da249cfdd37c1d9ddb9a49/src/graph_engine.py), `search_with_activation`, lines 110-194):
 1. The query is embedded (default `sentence-transformers/all-MiniLM-L6-v2`, 384-d). Every note with cosine ≥ 0.3 gets initial activation = cosine.
 2. The spreading step repeats `ACTIVATION_ITERATIONS` = 3 times. Every node with activation ≥ 0.1 sends `spread = activation × edge_weight × ACTIVATION_DECAY` to each neighbour, with a decay of 0.7.
 3. A neighbour that is not yet active takes the spread value. An active neighbour takes `max(a, a + 0.5·spread)`.

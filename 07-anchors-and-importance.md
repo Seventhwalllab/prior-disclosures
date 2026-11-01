@@ -1,6 +1,6 @@
 # Importance levels, non-decaying anchor categories, anchor policies, keyword anchors and entity merging
 
-**First public disclosure:** 2026-01-26 — importance `critical / normal / low`, hippograph [`ac9da23`](https://github.com/artemMprokhorov/hippograph/commit/ac9da23); anchor categories 2026-02-27; anchor policies 2026-03-05; keyword anchors 2026-04-07
+**First public disclosure:** 2026-01-26, importance `critical / normal / low`, hippograph [`ac9da23`](https://github.com/artemMprokhorov/hippograph/commit/ac9da23); anchor categories 2026-02-27; anchor policies 2026-03-05; keyword anchors 2026-04-07
 **Status of disclosure:** working code (MIT) for all parts; anchor policies by tag / note id / pattern only as a roadmap idea
 
 All times are UTC; for rewritten hippograph-pro commits both the current hash and the hash as first pushed are given
@@ -17,7 +17,7 @@ search and redirects to the parent note. Entity nodes are de-duplicated by norma
 
 ## How it worked as disclosed
 
-**1. Importance levels** — hippograph [`ac9da23`](https://github.com/artemMprokhorov/hippograph/commit/ac9da23), files
+**1. Importance levels**: hippograph [`ac9da23`](https://github.com/artemMprokhorov/hippograph/commit/ac9da23), files
 [`src/graph_engine.py`](https://github.com/artemMprokhorov/hippograph/blob/ac9da23/src/graph_engine.py) (`importance_factor`),
 [`src/database.py`](https://github.com/artemMprokhorov/hippograph/blob/ac9da23/src/database.py), MCP tools `set_importance`, `add_note(importance=…)`.
 - column `importance TEXT DEFAULT 'normal'`, values `critical | normal | low` (auto-migration for old databases);
@@ -25,7 +25,7 @@ search and redirects to the parent note. Entity nodes are de-duplicated by norma
   `importance_factor = base + min(0.5, 0.025 · access_count)` with base `critical 2.0 / normal 1.0 / low 0.5`;
 - retuned in [`171232a`](https://github.com/artemMprokhorov/hippograph/commit/171232a) (2026-02-06) to `1.5 / 1.0 / 0.7` and access boost `min(0.2, 0.01 · access_count)`.
 
-**2. Anchor categories exempt from decay** — hippograph-pro [`d115f80`](https://github.com/artemMprokhorov/hippograph-pro/commit/d115f80) (pushed as [`a30167a`](https://github.com/artemMprokhorov/hippograph-pro/commit/a30167a)),
+**2. Anchor categories exempt from decay**: hippograph-pro [`d115f80`](https://github.com/artemMprokhorov/hippograph-pro/commit/d115f80) (pushed as [`a30167a`](https://github.com/artemMprokhorov/hippograph-pro/commit/a30167a)),
 files [`src/graph_engine.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/d115f80/src/graph_engine.py), [`src/sleep_compute.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/d115f80/src/sleep_compute.py).
 - category `anchor`: recency factor is always 1.0 (no decay);
 - per-category decay multipliers `m`: self-reflection, relational-context, gratitude 0.1; milestone 0.15; protocol,
@@ -35,7 +35,7 @@ files [`src/graph_engine.py`](https://github.com/artemMprokhorov/hippograph-pro/
   `critical`.
 - README feature table from 2026-02-28 ([`725e01e`](https://github.com/artemMprokhorov/hippograph-pro/blob/725e01e/README.md)): "Anchor Protection … Critical memories exempt from decay".
 
-**3. User-defined anchor policies** — idea [`6121dd7`](https://github.com/artemMprokhorov/hippograph-pro/commit/6121dd7) (pushed as [`62c6ab0`](https://github.com/artemMprokhorov/hippograph-pro/commit/62c6ab0)), code
+**3. User-defined anchor policies**: idea [`6121dd7`](https://github.com/artemMprokhorov/hippograph-pro/commit/6121dd7) (pushed as [`62c6ab0`](https://github.com/artemMprokhorov/hippograph-pro/commit/62c6ab0)), code
 [`f7704a9`](https://github.com/artemMprokhorov/hippograph-pro/commit/f7704a9) (pushed as [`7057b7e`](https://github.com/artemMprokhorov/hippograph-pro/commit/7057b7e)), files
 [`src/database.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/f7704a9/src/database.py), [`src/mcp_sse_handler.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/f7704a9/src/mcp_sse_handler.py), [`src/sleep_compute.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/f7704a9/src/sleep_compute.py).
 - table `anchor_policies(id, category UNIQUE, policy_type DEFAULT 'protect', description, created_at, created_by)`;
@@ -46,18 +46,18 @@ files [`src/graph_engine.py`](https://github.com/artemMprokhorov/hippograph-pro/
 - The roadmap item (2026-02-27) also proposed policy rules by tag, by explicit note ids and by content pattern, with
   decay / importance overrides; only the per-category rule was implemented.
 
-**4. Automatic discovery of protected categories** — [`2d0d873`](https://github.com/artemMprokhorov/hippograph-pro/commit/2d0d873), [`b8e96f7`](https://github.com/artemMprokhorov/hippograph-pro/commit/b8e96f7).
+**4. Automatic discovery of protected categories**: [`2d0d873`](https://github.com/artemMprokhorov/hippograph-pro/commit/2d0d873), [`b8e96f7`](https://github.com/artemMprokhorov/hippograph-pro/commit/b8e96f7).
 Third layer on top of baseline and policies: a category is protected if it contains at least 3 (from `b8e96f7`: at
 least 1) `critical` notes, or if its name contains one of `learned, identity, protocol, security, consciousness,
 critical-lesson, self, anchor`.
 
-**5. Keyword anchors (materialised keywords)** — [`d9d60a0`](https://github.com/artemMprokhorov/hippograph-pro/commit/d9d60a0) (pushed as [`8244f10`](https://github.com/artemMprokhorov/hippograph-pro/commit/8244f10)),
+**5. Keyword anchors (materialised keywords)**: [`d9d60a0`](https://github.com/artemMprokhorov/hippograph-pro/commit/d9d60a0) (pushed as [`8244f10`](https://github.com/artemMprokhorov/hippograph-pro/commit/8244f10)),
 [`c7f4aa5`](https://github.com/artemMprokhorov/hippograph-pro/commit/c7f4aa5) (pushed as [`3f86353`](https://github.com/artemMprokhorov/hippograph-pro/commit/3f86353)), [`ad89bb1`](https://github.com/artemMprokhorov/hippograph-pro/commit/ad89bb1) (pushed as
 [`f064e9f`](https://github.com/artemMprokhorov/hippograph-pro/commit/f064e9f)), [`82f7b50`](https://github.com/artemMprokhorov/hippograph-pro/commit/82f7b50) (pushed as [`fe3af56`](https://github.com/artemMprokhorov/hippograph-pro/commit/fe3af56)); files
 [`EXPERIMENTS.md`](https://github.com/artemMprokhorov/hippograph-pro/blob/d9d60a0/EXPERIMENTS.md), [`src/graph_engine.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/c7f4aa5/src/graph_engine.py),
 [`src/sleep_compute.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/82f7b50/src/sleep_compute.py) (`step_keyword_anchors`).
 - keys for a note: named entities (multilingual spaCy model, length > 2) from the first 1000 characters, plus numeric
-  facts matched by regex (e.g. `name: 42%`, `Recall@5 = 0.9`); fallback — up to 4 words longer than 6 letters; at most
+  facts matched by regex (e.g. `name: 42%`, `Recall@5 = 0.9`); fallback: up to 4 words longer than 6 letters; at most
   7 keys;
 - anchor node text `KEY: k1 | k2 | …`, own embedding (normalised), category `keyword-anchor`, importance `low`, tags
   `anchor parent-<id> cat-<category>`; edge `PART_OF` anchor → parent; added to the ANN index;
@@ -68,7 +68,7 @@ critical-lesson, self, anchor`.
   "step 1d": all old anchors removed and rebuilt). EXPERIMENTS.md reports batch anchors created after consolidation
   outperforming inline ones.
 
-**6. Entity de-duplication and merging** — hippograph [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e5) (`get_or_create_entity` looks up
+**6. Entity de-duplication and merging**: hippograph [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e5) (`get_or_create_entity` looks up
 `LOWER(name)`), hippograph-pro [`e8f1719`](https://github.com/artemMprokhorov/hippograph-pro/commit/e8f1719) (pushed as [`568c8ce`](https://github.com/artemMprokhorov/hippograph-pro/commit/568c8ce)), file
 [`src/database.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/e8f1719/src/database.py):
 - on ingestion, entities are matched by `lower(name)` and `entity_type` and stored lower-case (different types stay
@@ -103,9 +103,9 @@ critical-lesson, self, anchor`.
   category (anchor protection), and protection in turn sets `critical` (boost step) and is inferred from `critical`
   notes (auto-discovery).
 - **Decay switch for benchmarks**: `DISABLE_CATEGORY_DECAY=true` in the benchmark compose file
-  ([`9cdb624`](https://github.com/artemMprokhorov/hippograph-pro/commit/9cdb624), pushed as [`59cdc9b`](https://github.com/artemMprokhorov/hippograph-pro/commit/59cdc9b), 2026-03-07) — category decay is a production behaviour,
+  ([`9cdb624`](https://github.com/artemMprokhorov/hippograph-pro/commit/9cdb624), pushed as [`59cdc9b`](https://github.com/artemMprokhorov/hippograph-pro/commit/59cdc9b), 2026-03-07), category decay is a production behaviour,
   disabled for external datasets.
-- **Pending intentions** reuse the same protection: kept `critical` while pending, set to `low` when done — see
+- **Pending intentions** reuse the same protection: kept `critical` while pending, set to `low` when done: see
   [09-intentions.md](09-intentions.md).
 - **Inline vs batch keyword anchors**, as described in item 5.
 
@@ -116,7 +116,7 @@ memory-type-specific retention and protected tags (mcp-memory-service, 2025-07-2
 retrieval (LangChain, 2023; Dense X Retrieval, 2023); entity resolution.
 Our contribution (first disclosed 2026-03-21, hippograph-pro 2d0d873; user policies 2026-03-05, f7704a9): the set of
 decay-exempt ("anchor") categories is the union of a fixed baseline, user policies added through MCP tools, and
-categories discovered in each offline pass — any category that already contains a note marked critical, or whose
+categories discovered in each offline pass: any category that already contains a note marked critical, or whose
 name contains a protective keyword; notes in these categories are kept at critical importance and their edges are
 excluded from edge decay. Keyword anchors and entity merging: no distinct contribution claimed.
 

@@ -1,6 +1,6 @@
 # Intentions (prospective memory) as non-decaying nodes of the memory graph
 
-**First public disclosure:** 2026-04-08 — working code, hippograph-pro [`b05871f`](https://github.com/artemMprokhorov/hippograph-pro/commit/b05871f) (pushed as [`3a2938c`](https://github.com/artemMprokhorov/hippograph-pro/commit/3a2938c))
+**First public disclosure:** 2026-04-08, working code, hippograph-pro [`b05871f`](https://github.com/artemMprokhorov/hippograph-pro/commit/b05871f) (pushed as [`3a2938c`](https://github.com/artemMprokhorov/hippograph-pro/commit/3a2938c))
 **Status of disclosure:** working code (MIT), with unit tests
 
 All times are UTC; see [README.md](README.md#how-to-verify-dates).
@@ -15,7 +15,7 @@ marks overdue intentions.
 
 ## How it worked as disclosed
 
-**Code** — [`b05871f`](https://github.com/artemMprokhorov/hippograph-pro/commit/b05871f), files
+**Code**: [`b05871f`](https://github.com/artemMprokhorov/hippograph-pro/commit/b05871f), files
 [`src/mcp_sse_handler.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/b05871f/src/mcp_sse_handler.py), [`src/sleep_compute.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/b05871f/src/sleep_compute.py),
 [`src/graph_engine.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/b05871f/src/graph_engine.py); tests
 [`tests/test_prospective_memory.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/6d86974/tests/test_prospective_memory.py) ([`6d86974`](https://github.com/artemMprokhorov/hippograph-pro/commit/6d86974)).
@@ -26,7 +26,7 @@ marks overdue intentions.
 2. **`complete_intention(id, status = done | cancelled, note?)`** (MCP tool and CLI `--complete-intention`): replaces
    `pending` by the status in the tags, optionally appends `[DONE] …` / `[CANCELLED] …` to the content, and sets
    importance `low`, "After completion, the note switches to low importance and can decay normally."
-3. **Sleep step "3b: Prospective Memory"** (`step_prospective_memory`): for every `prospective` note — if `pending`,
+3. **Sleep step "3b: Prospective Memory"** (`step_prospective_memory`): for every `prospective` note, if `pending`,
    force importance `critical`; if a `due:` tag is in the past, prefix the content with `[OVERDUE]` once; if `done` or
    `cancelled`, set importance `low`. Supports dry run. CLI `--list-intentions` lists them.
 4. **Why pending intentions do not fade**: importance `critical` places the category under the anchor protection

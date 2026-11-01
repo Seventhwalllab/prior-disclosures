@@ -1,6 +1,6 @@
 # Sleep-time consolidation of a memory graph without an LLM
 
-**First public disclosure:** 2026-01-28 — consolidation pass, hippograph [`a091221`](https://github.com/artemMprokhorov/hippograph/commit/a091221) (the recency half-life used by the same system is public from 2026-01-26, [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e5))
+**First public disclosure:** 2026-01-28, consolidation pass, hippograph [`a091221`](https://github.com/artemMprokhorov/hippograph/commit/a091221) (the recency half-life used by the same system is public from 2026-01-26, [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e5))
 **Status of disclosure:** working code (MIT), plus design text in README / ROADMAP files
 
 All times are UTC. "Pushed" times come from GitHub's own push log (`/activity`) or from GH Archive; see [README.md](README.md#how-to-verify-dates).
@@ -15,7 +15,7 @@ a snapshot before every run. Work is split into a frequent cheap pass ("light sl
 
 ## How it worked as disclosed
 
-**1. Consolidation by linking, not compression** — [`a091221`](https://github.com/artemMprokhorov/hippograph/commit/a091221), file
+**1. Consolidation by linking, not compression**: [`a091221`](https://github.com/artemMprokhorov/hippograph/commit/a091221), file
 [`src/memory_consolidation.py`](https://github.com/artemMprokhorov/hippograph/blob/a091221/src/memory_consolidation.py);
 design note [`docs/MEMORY_CONSOLIDATION.md`](https://github.com/artemMprokhorov/hippograph/blob/d853e2d/docs/MEMORY_CONSOLIDATION.md) ([`d853e2d`](https://github.com/artemMprokhorov/hippograph/commit/d853e2d)).
 - *Thematic clusters:* greedy pass over all note embeddings; notes with cosine ≥ 0.75 to a seed join its cluster;
@@ -24,13 +24,13 @@ design note [`docs/MEMORY_CONSOLIDATION.md`](https://github.com/artemMprokhorov/
   chains of ≥ 3 get sequential `temporal_chain` edges, weight 0.95.
 - Code comment: "CRITICAL: This is NOT compression. Original notes preserved intact."
 
-**2. Recency half-life (used in retrieval, softened for protected memories later)** — [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e5), [`ac9da23`](https://github.com/artemMprokhorov/hippograph/commit/ac9da23),
+**2. Recency half-life (used in retrieval, softened for protected memories later)**: [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e5), [`ac9da23`](https://github.com/artemMprokhorov/hippograph/commit/ac9da23),
 file [`src/graph_engine.py`](https://github.com/artemMprokhorov/hippograph/blob/ac9da23/src/graph_engine.py).
 `recency = max(0.1, 0.5 ** (age_days / HALF_LIFE_DAYS))`, `HALF_LIFE_DAYS = 30` (env-configurable); from `ac9da23` the
 age is measured from `last_accessed` (fallback: creation time), and the floor 0.1 keeps old notes reachable. The factor
 multiplies a note's activation score.
 
-**3. Maintenance daemon ("sleep-time compute")** — [`ca0392a`](https://github.com/artemMprokhorov/hippograph/commit/ca0392a), file
+**3. Maintenance daemon ("sleep-time compute")**: [`ca0392a`](https://github.com/artemMprokhorov/hippograph/commit/ca0392a), file
 [`src/sleep_compute.py`](https://github.com/artemMprokhorov/hippograph/blob/ca0392a/src/sleep_compute.py); MCP tool `sleep_compute(dry_run)` in
 [`c296a1c`](https://github.com/artemMprokhorov/hippograph/commit/c296a1c). Modes `--once`, `--interval N` (hours, default 6), `--dry-run`. One cycle:
 1. consolidation (step 1 above);
@@ -42,7 +42,7 @@ multiplies a note's activation score.
 The design goal is stated in [`ROADMAP_PERSONAL.md`](https://github.com/artemMprokhorov/hippograph/blob/ea6f160/ROADMAP_PERSONAL.md) ([`ea6f160`](https://github.com/artemMprokhorov/hippograph/commit/ea6f160)):
 "Pure graph math — NetworkX, zero LLM cost."
 
-**4. Light sleep / deep sleep and triggers** — hippograph-pro [`8533620`](https://github.com/artemMprokhorov/hippograph-pro/commit/8533620),
+**4. Light sleep / deep sleep and triggers**: hippograph-pro [`8533620`](https://github.com/artemMprokhorov/hippograph-pro/commit/8533620),
 [`ROADMAP_PRO.md` §8 "Sleep-Wake Cycle Architecture"](https://github.com/artemMprokhorov/hippograph-pro/blob/8533620/ROADMAP_PRO.md):
 - *Light sleep* (fast, about every 50 new notes): stale edge decay, duplicate scan, PageRank recalculation;
 - *Deep sleep* (heavy, daily): entity re-extraction on old notes, typed-relation building, cluster consolidation via
@@ -57,7 +57,7 @@ PageRank recalculation, duplicate scan, anchor importance boost / Deep sleep (da
 detection, snapshot + rollback". *Note:* in the disclosed code both triggers call the same full pipeline
 (`run_all`); the light/deep split is disclosed as a description, not as two separate code paths.
 
-**5. Snapshot before sleep, manual rollback, no overwrite of existing edges** — [`cb7df86`](https://github.com/artemMprokhorov/hippograph-pro/commit/cb7df86)
+**5. Snapshot before sleep, manual rollback, no overwrite of existing edges**: [`cb7df86`](https://github.com/artemMprokhorov/hippograph-pro/commit/cb7df86)
 (pushed as [`c51ff90`](https://github.com/artemMprokhorov/hippograph-pro/commit/c51ff90)), file
 [`src/sleep_compute.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/cb7df86/src/sleep_compute.py):
 - before every live (non-dry) run the database file is copied to `memory_snapshot_<timestamp>.db`; the newest
@@ -67,7 +67,7 @@ detection, snapshot + rollback". *Note:* in the disclosed code both triggers cal
 - when sleep finds a relation for a pair that already has an edge of another type, it does not overwrite it but logs
   the candidate into an `edge_history` table (`conflict_type = 'type_conflict'`).
 
-**6. Rebuilding topics during sleep** — hippograph-pro:
+**6. Rebuilding topics during sleep**: hippograph-pro:
 - [`06b2a7b`](https://github.com/artemMprokhorov/hippograph-pro/commit/06b2a7b) (pushed as [`f87c023`](https://github.com/artemMprokhorov/hippograph-pro/commit/f87c023)), [`src/extractive_summary.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/06b2a7b/src/extractive_summary.py):
   for each thematic cluster, the representative note is chosen by TF-IDF term coverage weighted by intra-cluster
   PageRank and stored in `cluster_summaries` (no text is generated);
@@ -76,7 +76,7 @@ detection, snapshot + rollback". *Note:* in the disclosed code both triggers cal
   three terms, and member notes get `BELONGS_TO` edges; a second variant clusters all embeddings with k-means,
   `k = max(10, n // 30)` (capped at `n // 3`), fixed seed 42; topic nodes are excluded from search results. Old
   `BELONGS_TO` edges are reset on every run;
-- [`a22cc4b`](https://github.com/artemMprokhorov/hippograph-pro/commit/a22cc4b) (pushed as [`86c325f`](https://github.com/artemMprokhorov/hippograph-pro/commit/86c325f)): the rebuild made idempotent — old topic nodes and
+- [`a22cc4b`](https://github.com/artemMprokhorov/hippograph-pro/commit/a22cc4b) (pushed as [`86c325f`](https://github.com/artemMprokhorov/hippograph-pro/commit/86c325f)): the rebuild made idempotent: old topic nodes and
   their edges are deleted before re-clustering, and synthetic node types are kept out of the k-means pool.
 
 ## Disclosure timeline
@@ -85,7 +85,7 @@ detection, snapshot + rollback". *Note:* in the disclosed code both triggers cal
 |---|---|---|---|---|
 | 2026-01-26 | hippograph | [`a96a1e5`](https://github.com/artemMprokhorov/hippograph/commit/a96a1e5) | recency factor, half-life 30 days | push 01:42:51Z ([activity](https://github.com/artemMprokhorov/hippograph/activity)); GH Archive [2026-01-26-1](https://data.gharchive.org/2026-01-26-1.json.gz) PushEvent, `public: true` |
 | 2026-01-26 | hippograph | [`ac9da23`](https://github.com/artemMprokhorov/hippograph/commit/ac9da23) | half-life from `last_accessed`, floor 0.1 | push 02:02:05Z; GH Archive [2026-01-26-2](https://data.gharchive.org/2026-01-26-2.json.gz), `public: true` |
-| 2026-01-28 | hippograph | [`a091221`](https://github.com/artemMprokhorov/hippograph/commit/a091221), [`d853e2d`](https://github.com/artemMprokhorov/hippograph/commit/d853e2d) | consolidation: thematic clusters + temporal chains, design note | push 19:22:43Z / 19:23:38Z ([activity](https://github.com/artemMprokhorov/hippograph/activity)); GH Archive has no events for that hour — the next captured push [`bfc9310`](https://github.com/artemMprokhorov/hippograph/commit/bfc9310) (2026-02-04T18:11:04Z, [file](https://data.gharchive.org/2026-02-04-18.json.gz)) contains it |
+| 2026-01-28 | hippograph | [`a091221`](https://github.com/artemMprokhorov/hippograph/commit/a091221), [`d853e2d`](https://github.com/artemMprokhorov/hippograph/commit/d853e2d) | consolidation: thematic clusters + temporal chains, design note | push 19:22:43Z / 19:23:38Z ([activity](https://github.com/artemMprokhorov/hippograph/activity)); GH Archive has no events for that hour, the next captured push [`bfc9310`](https://github.com/artemMprokhorov/hippograph/commit/bfc9310) (2026-02-04T18:11:04Z, [file](https://data.gharchive.org/2026-02-04-18.json.gz)) contains it |
 | 2026-02-12 | hippograph | [`2b4e5b8`](https://github.com/artemMprokhorov/hippograph/commit/2b4e5b8) | one-line idea: "Graph-wide rollback (point-in-time snapshots)" (enterprise roadmap) | push 16:24:58Z; GH Archive [2026-02-12-16](https://data.gharchive.org/2026-02-12-16.json.gz) |
 | 2026-02-18 | hippograph | [`ea6f160`](https://github.com/artemMprokhorov/hippograph/commit/ea6f160) | "sleep-time compute" without LLM, design | on remote before 23:16:50Z (activity) |
 | 2026-02-18 | hippograph | [`ca0392a`](https://github.com/artemMprokhorov/hippograph/commit/ca0392a), [`c296a1c`](https://github.com/artemMprokhorov/hippograph/commit/c296a1c) | 5-step daemon, edge decay ×0.95 after 90 days, MCP tool | push 23:33:00Z; GH Archive [2026-02-18-23](https://data.gharchive.org/2026-02-18-23.json.gz), `public: true`; Wayback [2026-03-18](https://web.archive.org/web/20260318170705/https://github.com/artemMprokhorov/hippograph) (README lists sleep-time compute) |
@@ -104,7 +104,7 @@ detection, snapshot + rollback". *Note:* in the disclosed code both triggers cal
 - **Online consolidation** ([`fbd9c79`](https://github.com/artemMprokhorov/hippograph-pro/commit/fbd9c79)): at write time the new note is linked by `consolidation` edges to
   up to 15 ANN neighbours with cosine ≥ 0.75, without waiting for sleep (`ONLINE_CONSOLIDATION`, default on).
 - **Protected memories during decay**: from 2026-02-27 edges touching notes of protected categories are skipped by
-  stale-edge decay, and the recency half-life is softened per category — see
+  stale-edge decay, and the recency half-life is softened per category: see
   [07-anchors-and-importance.md](07-anchors-and-importance.md).
 - **Deep-sleep steps added later** (same pipeline): typed relations from a zero-shot relation extractor
   ([`777802c`](https://github.com/artemMprokhorov/hippograph-pro/commit/777802c)), contradiction candidates ([`c547d78`](https://github.com/artemMprokhorov/hippograph-pro/commit/c547d78), pushed as [`2d691dc`](https://github.com/artemMprokhorov/hippograph-pro/commit/2d691dc), 2026-03-03), keyword anchors
@@ -118,7 +118,7 @@ Builds on: complementary learning systems (McClelland, McNaughton & O'Reilly 199
 (Letta, arXiv 2504.13171, 2025); LLM-free "dream-inspired" consolidation with decay, clustering, associations and
 archiving (mcp-memory-service, 2025-07-28); recency half-life (Generative Agents, 2023).
 Our contribution (first disclosed 2026-01-28, hippograph a091221; daemon 2026-02-18, ca0392a; snapshots 2026-02-27,
-hippograph-pro cb7df86): a strictly non-destructive offline consolidation pass for an agent's memory graph — it only
+hippograph-pro cb7df86): a strictly non-destructive offline consolidation pass for an agent's memory graph, it only
 adds or re-weights edges (cluster and temporal-chain links, gentle decay of long-unused edges, topic nodes labelled
 by TF-IDF and rebuilt each run) and never summarises, compresses or deletes the user's notes; the database is
 snapshotted before every run, and an edge whose type would change is logged to an edge history instead of being

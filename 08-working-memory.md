@@ -1,6 +1,6 @@
 # Working memory inside the memory graph: overwrite note, then a time-linked journal
 
-**First public disclosure:** 2026-03-17 — `update_working_memory` tool, hippograph-pro [`7f45070`](https://github.com/artemMprokhorov/hippograph-pro/commit/7f45070) (journal mode 2026-04-07, [`82f7b50`](https://github.com/artemMprokhorov/hippograph-pro/commit/82f7b50); short-term → long-term promotion as a roadmap idea 2026-01-26, hippograph [`0ccd4f2`](https://github.com/artemMprokhorov/hippograph/commit/0ccd4f2))
+**First public disclosure:** 2026-03-17, `update_working_memory` tool, hippograph-pro [`7f45070`](https://github.com/artemMprokhorov/hippograph-pro/commit/7f45070) (journal mode 2026-04-07, [`82f7b50`](https://github.com/artemMprokhorov/hippograph-pro/commit/82f7b50); short-term → long-term promotion as a roadmap idea 2026-01-26, hippograph [`0ccd4f2`](https://github.com/artemMprokhorov/hippograph/commit/0ccd4f2))
 **Status of disclosure:** working code (MIT) for the working-memory note and journal; short-term → long-term promotion only as an idea plus an explicit markup convention
 
 All times are UTC; see [README.md](README.md#how-to-verify-dates).
@@ -15,23 +15,23 @@ journal, and the session start returns the latest entry plus a short history.
 
 ## How it worked as disclosed
 
-**1. Idea: short-term vs long-term tiers** — hippograph [`0ccd4f2`](https://github.com/artemMprokhorov/hippograph/commit/0ccd4f2),
+**1. Idea: short-term vs long-term tiers**: hippograph [`0ccd4f2`](https://github.com/artemMprokhorov/hippograph/commit/0ccd4f2),
 [`ROADMAP.md`](https://github.com/artemMprokhorov/hippograph/blob/0ccd4f2/ROADMAP.md) ("Memory Hierarchy & Lifecycle", enterprise phase): session-based
 short-term / working memory with 24 h retention, a cache of recently accessed nodes, and "Access-based Promotion —
 Frequently used short-term → long-term". Repeated in [`2b4e5b8`](https://github.com/artemMprokhorov/hippograph/commit/2b4e5b8) (2026-02-12). No code.
 
-**2. Working-memory note (overwrite)** — hippograph-pro [`7f45070`](https://github.com/artemMprokhorov/hippograph-pro/commit/7f45070), files
+**2. Working-memory note (overwrite)**: hippograph-pro [`7f45070`](https://github.com/artemMprokhorov/hippograph-pro/commit/7f45070), files
 [`src/mcp_sse_handler.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/7f45070/src/mcp_sse_handler.py) (`tool_update_working_memory`),
 [`AGENT_PROMPT.md`](https://github.com/artemMprokhorov/hippograph-pro/blob/7f45070/AGENT_PROMPT.md); tests [`f307352`](https://github.com/artemMprokhorov/hippograph-pro/commit/f307352).
 - MCP tool `update_working_memory(content, session_id)`: finds the newest note of category `working-memory`; if it
   exists, replaces its content, re-embeds it and updates the vector and BM25 indexes; otherwise creates it;
 - the agent prompt makes the update an "inference trigger": call it after a decision, a finished task, a change of
-  direction or important new context — "Keep it concise (5-10 lines)", and not on every exchange;
+  direction or important new context: "Keep it concise (5-10 lines)", and not on every exchange;
 - the same commit adds a `tags` field written by the AI at save time and indexed by BM25 together with the content.
 - From [`e745cca`](https://github.com/artemMprokhorov/hippograph-pro/commit/e745cca) (pushed as [`1b03c95`](https://github.com/artemMprokhorov/hippograph-pro/commit/1b03c95), 2026-03-28) the session-start script in
   `AGENT_PROMPT.md` reads it explicitly: `search_memory("working memory", category="working-memory")`.
 
-**3. Working memory as a journal** — [`82f7b50`](https://github.com/artemMprokhorov/hippograph-pro/commit/82f7b50) (pushed as [`fe3af56`](https://github.com/artemMprokhorov/hippograph-pro/commit/fe3af56), re-pushed as
+**3. Working memory as a journal**: [`82f7b50`](https://github.com/artemMprokhorov/hippograph-pro/commit/82f7b50) (pushed as [`fe3af56`](https://github.com/artemMprokhorov/hippograph-pro/commit/fe3af56), re-pushed as
 [`873b4d7`](https://github.com/artemMprokhorov/hippograph-pro/commit/873b4d7)), file [`src/mcp_sse_handler.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/82f7b50/src/mcp_sse_handler.py); prompt note
 [`063d5f4`](https://github.com/artemMprokhorov/hippograph-pro/commit/063d5f4) (pushed as [`afa065b`](https://github.com/artemMprokhorov/hippograph-pro/commit/afa065b)).
 - every call inserts a new `working-memory` note through the normal write path (embedding, entities, links);
@@ -39,7 +39,7 @@ Frequently used short-term → long-term". Repeated in [`2b4e5b8`](https://githu
 - "current" working memory = newest entry (`ORDER BY timestamp DESC LIMIT 1`); older entries stay searchable.
 - Prompt text: "update_working_memory() creates a NEW node each call (temporal journal)."
 
-**4. Session-context service and explicit promotion to long-term memory** — [`47ce223`](https://github.com/artemMprokhorov/hippograph-pro/commit/47ce223) (pushed as
+**4. Session-context service and explicit promotion to long-term memory**: [`47ce223`](https://github.com/artemMprokhorov/hippograph-pro/commit/47ce223) (pushed as
 [`e13f263`](https://github.com/artemMprokhorov/hippograph-pro/commit/e13f263)), file [`session_context_mcp.py`](https://github.com/artemMprokhorov/hippograph-pro/blob/47ce223/session_context_mcp.py); README
 [`cd535e9`](https://github.com/artemMprokhorov/hippograph-pro/commit/cd535e9), [`CHANGELOG.md`](https://github.com/artemMprokhorov/hippograph-pro/blob/97690be/CHANGELOG.md) ([`97690be`](https://github.com/artemMprokhorov/hippograph-pro/commit/97690be)).
 - a small separate MCP server: `get_session_context()` returns the newest journal entry as the working memory plus

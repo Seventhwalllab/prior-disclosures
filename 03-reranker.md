@@ -1,6 +1,6 @@
 # Cross-encoder reranking stage in a graph-memory retrieval pipeline
 
-**First public disclosure:** 2026-02-12 — hippograph [`7502438`](https://github.com/artemMprokhorov/hippograph/commit/75024382806b6254c52d11a77949c325870bb220) (working code). It was announced as a plan the same day in [`2b4e5b8`](https://github.com/artemMprokhorov/hippograph/commit/2b4e5b87325c76efc81986804d7cb059c7ec2291). A broader idea, "multi-factor" reranking, appeared on 2026-02-04 in [`63ebb09`](https://github.com/artemMprokhorov/hippograph/commit/63ebb09348ad7e14e98f4ceda9960beb06db8bb2).
+**First public disclosure:** 2026-02-12, hippograph [`7502438`](https://github.com/artemMprokhorov/hippograph/commit/75024382806b6254c52d11a77949c325870bb220) (working code). It was announced as a plan the same day in [`2b4e5b8`](https://github.com/artemMprokhorov/hippograph/commit/2b4e5b87325c76efc81986804d7cb059c7ec2291). A broader idea, "multi-factor" reranking, appeared on 2026-02-04 in [`63ebb09`](https://github.com/artemMprokhorov/hippograph/commit/63ebb09348ad7e14e98f4ceda9960beb06db8bb2).
 **Status of disclosure:** working code (MIT License). It was off by default until 2026-03-25 and enabled in the deployment config from 2026-03-25.
 
 All times are UTC. Git author dates are in UTC−3. "Pushed" times are from GitHub's server-side push log (`/activity`, saved 2026-10-31).
