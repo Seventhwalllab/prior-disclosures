@@ -435,8 +435,12 @@ long-term memory, LangChain, 2024-10-08); extracted-fact memory for agents (Mem0
 (Dynamic Agent Skills survey, arXiv 2607.10113, 2026-07-11); skill lifecycle as an evidence-gated state-transition process
 (TrackRL, arXiv 2610.25126, 2026-10-18); promotion to a higher group on success and demotion on failure down to a floor
 group (the flashcard scheme of US 8,832,117 B2, Su, filed 2012-02-06, which relates it to Leitner's method; Leitner,
-*So lernt man lernen*, Herder, 1972); availability of a memory tied to the frequency and recency of its use (Anderson &
-Schooler, *Psychological Science* 2(6), 1991); offline consolidation between memory systems (McClelland, McNaughton &
+*So lernt man lernen*, Herder, 1972); three stages of skill acquisition, cognitive, associative and autonomous (Fitts,
+1964; Fitts & Posner, *Human Performance*, 1967; as described in Anderson, *Acquisition of cognitive skill*, *Psychological
+Review* 89(4), 369-406, 1982); availability of a memory tied to the frequency and recency of its use (Anderson &
+Schooler, *Psychological Science* 2(6), 1991), formalised as the base-level learning equation of ACT-R, B = ln(sum of
+t_j^-d) over past uses (Taatgen, Lebiere & Anderson, *Modeling paradigms in ACT-R*, in R. Sun (ed.), *Cognition and
+Multi-Agent Interaction*, Cambridge University Press, 2006, pp. 29-52); offline consolidation between memory systems (McClelland, McNaughton &
 O'Reilly, *Psychological Review* 102(3), 1995); a hierarchical multi-layer action store whose mappings are created and
 updated from execution feedback and performance signals (US 12,681,858 B2, Microsoft, priority 2024-10-21, granted
 2026-07-14). Predecessor: hippograph-pro stored ingested skills as ordinary `skill` nodes of its single graph
@@ -465,7 +469,7 @@ What the nearest references lack relative to this description:
 | Dynamic Agent Skills (2026); TrackRL (2026) | Lifecycle of agent skills: admission, repair, pruning, provenance, rollback; evidence-gated state transitions | Per-module subgraphs; lazy hydration; idle decay in a sleep phase |
 | PlugMem (2026) | A memory module attached to an agent | A memory per installed module; the storage mechanisms of §1 to §7 |
 | US 8,832,117 B2 (Leitner's method) | Promotion on success, demotion on failure, floor group | Subgraphs per module; lazy hydration; sleep-phase decay; transfer with provenance |
-| Anderson & Schooler (1991); McClelland et al. (1995) | Availability by recency and frequency of use; offline consolidation | Per-module subgraphs, journals, bridges; a tier ladder |
+| Fitts (1964), Fitts & Posner (1967); Anderson & Schooler (1991), ACT-R base-level learning; McClelland et al. (1995) | Availability by recency and frequency of use; offline consolidation | Per-module subgraphs, journals, bridges; a tier ladder |
 | US 12,681,858 B2 | Hierarchical action store with memory layers, updated by execution signals | Tier ladder; per-module subgraph lifecycle; bridges; journal |
 
 ## Reference implementation
