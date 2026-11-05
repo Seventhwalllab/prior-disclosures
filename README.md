@@ -45,6 +45,7 @@ wrapped in a Markdown code fence; the text itself is the MIT License. Software H
 | 10 | [Evaluation methods: LoCoMo retrieval adapter, Personal Continuity Benchmark, regression set](10-benchmarks.md) | 2026-02-11 (reference queries), 2026-02-12 (LoCoMo), 2026-03-16 (PCB) |
 | 11 | [Peripheral memory: per-module subgraphs, one hydration point, journals, bridge edges, write-through marker, sleep-cycle consolidation](11-peripheral-memory.md) | 2026-11-01 (this document; earlier traces 2026-08-23 and 2026-10-07) |
 | 12 | [Memory at the moment of action: agent-host hooks at session start, prompt, answer and tool call; a gate that names the readers of an edit; recall keyed by the agent's next action](12-memory-at-the-moment-of-action.md) | 2026-11-02 (this document; earlier trace 2026-09-29) |
+| 13 | [The graph answers: a pointer from every outdated record to its newest replacement, and answers built from the graph's own edges and times, with no model writing them](13-the-graph-answers.md) | 2026-11-05 (this document; earlier trace 2026-03-22) |
 | 14 | [Cross-language search learned from the person's own mixed-language records: a shift along directions from the two halves of one record, checked on held-out halves](14-cross-language-shift.md) | 2026-11-05 (this document; earlier trace 2026-09-29) |
 
 ## How to verify dates
